@@ -1,4 +1,7 @@
 # tokyo as the default region
 region = "ap-northeast-1"
-# s3 bucket of tfstatus
-tfbucket = "orjujeng-tfstate"
+#perfix with orjujeng 
+perfix = "orjujeng"
+#az list
+availability_zone_1a = "ap-northeast-1a"
+availability_zone_1c = "ap-northeast-1c"

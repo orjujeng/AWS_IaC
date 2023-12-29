@@ -1,9 +1,9 @@
 terraform {
   required_version = ">=v1.6.6"
   backend "s3" {
-    region = var.region
-    bucket = var.tfbucket
-    key = "terraform.tfstate"
+    region = "ap-northeast-1"
+    bucket = "orjujeng-tfstate"
+    key    = "terraform.tfstate"
   }
 }
 
@@ -12,4 +12,4 @@ terraform {
 // aws configure to set aksk and region
 provider "aws" {
   region = var.region
-  }
+}
