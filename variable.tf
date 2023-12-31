@@ -12,3 +12,6 @@ variable "availability_zone_1a" {
 variable "availability_zone_1c" {
   type = string
 }
+variable "ssh_key"{
+  
+}
