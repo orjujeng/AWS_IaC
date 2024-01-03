@@ -1,9 +1,11 @@
 terraform {
   required_version = ">=v1.6.6"
   backend "s3" {
-    region = "ap-northeast-1"
-    bucket = "orjujeng-tfstate"
-    key    = "terraform.tfstate"
+    region         = "ap-northeast-1"
+    bucket         = "orjujeng-tfstate"
+    key            = "terraform.tfstate"
+    dynamodb_table = "orjujeng_terraform_lock"
+    encrypt        = true
   }
 }
 
