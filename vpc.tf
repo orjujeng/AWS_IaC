@@ -272,3 +272,31 @@ resource "aws_security_group" "orjujeng_efs_sg" {
     Name = "orjujeng_efs_sg"
   }
 }
+
+
+#codebuild
+resource "aws_security_group" "orjujeng_codebuild_sg" {
+  name        = "orjujeng_codebuild_sg"
+  description = "Allow codebuild"
+  vpc_id      = aws_vpc.orjujeng_vpc.id
+
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+    prefix_list_ids = []
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+    prefix_list_ids = []
+  }
+
+  tags = {
+    Name = "orjujeng_codebuild_sg"
+  }
+}

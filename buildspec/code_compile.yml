@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo ${REPO_HTTPS}
+      - git clone ${REPO_HTTPS} repo
+      - cd repo
+      - echo per_build mode done
+  build:
+    commands:
+      - echo build mode 
+      - mvn clean package -Dskiptests=true
+      - cp Dockerfile ../
+      - cp -r target ../
+  post_build:
+    commands:
+      - echo post_build mode 
+artifacts:
+  files:
+    - Dockerfile
+    - target/*.jar
+cache:
+  paths:
+    - root/.m2/**/*
