@@ -101,14 +101,14 @@ resource "aws_codebuild_project" "orjujeng_codebuild_poc" {
 
   artifacts {
     type      = "S3"
-    location  = "${aws_s3_bucket.artifacts_file.bucket}"
+    location  = aws_s3_bucket.artifacts_file.bucket
     packaging = "ZIP"
     path      = "/orjujeng_codebuild_poc/"
   }
 
   cache {
     type     = "S3"
-    location = "${aws_s3_bucket.cache_file.bucket}"
+    location = aws_s3_bucket.cache_file.bucket
   }
 
   environment {
@@ -121,6 +121,10 @@ resource "aws_codebuild_project" "orjujeng_codebuild_poc" {
       name  = "REPO_HTTPS"
       value = "https://github.com/orjujeng/th-manager-api.git"
     }
+    environment_variable {
+      name  = "BRANCH"
+      value = "aws-release"
+    }
   }
 
   logs_config {
@@ -131,8 +135,8 @@ resource "aws_codebuild_project" "orjujeng_codebuild_poc" {
   }
 
   source {
-    type            = "NO_SOURCE"
-    buildspec       = file("./buildspec/code_compile.yml")
+    type      = "NO_SOURCE"
+    buildspec = file("./buildspec/code_compile.yml")
   }
 
   # vpc_config {

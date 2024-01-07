@@ -28,6 +28,19 @@ resource "aws_elasticache_subnet_group" "orjujeng_redis_subnet_group" {
 #   }
 # }
 
+resource "aws_elasticache_parameter_group" "default_redis7_cluster_on_springsession" {
+  name   = "orjujeng-redis7-parameter-group"
+  family = "redis7"
+  parameter {
+    name  = "notify-keyspace-events"
+    value = "Egx"
+  }
+  parameter {
+    name  = "cluster-enabled"
+    value = "yes"
+  }
+}
+
 #cluster and booster mode
 resource "aws_elasticache_replication_group" "orjujeng_elasticache_cluster" {
   automatic_failover_enabled = true
@@ -35,7 +48,7 @@ resource "aws_elasticache_replication_group" "orjujeng_elasticache_cluster" {
   description                = "orjujeng_elasticache_cluster"
   node_type                  = "cache.t3.micro"
   num_cache_clusters         = 1
-  parameter_group_name       = "default.redis7.cluster.on"
+  parameter_group_name       = aws_elasticache_parameter_group.default_redis7_cluster_on_springsession.name
   engine_version             = "7.1"
   engine                     = "redis"
   port                       = 6379

@@ -3,22 +3,24 @@ phases:
   pre_build:
     commands:
       - echo ${REPO_HTTPS}
-      - git clone ${REPO_HTTPS} repo
+      - git clone -b ${BRANCH} ${REPO_HTTPS} repo
       - cd repo
-      - echo per_build mode done
   build:
     commands:
       - echo build mode 
-      - mvn clean package -Dskiptests=true
-      - cp Dockerfile ../
-      - cp -r target ../
+      - mvn clean package -q -Dskiptests=true
   post_build:
     commands:
-      - echo post_build mode 
+      - cp Dockerfile ../
+      - cp -r target ../
+      - cp appspec.yml ../
+      - cp build_expose.sh ../
 artifacts:
   files:
     - Dockerfile
     - target/*.jar
+    - appspec.yml
+    - build_expose.sh
 cache:
   paths:
     - root/.m2/**/*

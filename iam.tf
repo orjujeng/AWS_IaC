@@ -44,6 +44,11 @@ resource "aws_iam_role_policy_attachment" "attach_SSMFullAccess" {
   policy_arn = data.aws_iam_policy.AmazonSSMFullAccess.arn
 }
 
+resource "aws_iam_role_policy_attachment" "attach_AmazonS3FullAccess" {
+  policy_arn = data.aws_iam_policy.AmazonS3FullAccess.arn
+  role       = aws_iam_role.orjujeng_ec2_iam_role.name
+}
+
 # resource "aws_iam_role_policy_attachment" "attach_CodeCommitFullAccess" {
 #   role       = aws_iam_role.orjujeng_ec2_iam_role.name
 #   policy_arn = data.aws_iam_policy.AWSCodeCommitFullAccess.arn
