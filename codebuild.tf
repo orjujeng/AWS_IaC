@@ -69,6 +69,13 @@ resource "aws_s3_bucket" "artifacts_file" {
     Name = "orjujeng_codebuild_artifacts"
   }
 }
+#code artifacts result open version control new s3
+resource "aws_s3_bucket_versioning" "artifacts_file_versioning_status" {
+  bucket = aws_s3_bucket.artifacts_file.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
 #code build cache in new s3
 resource "aws_s3_bucket" "cache_file" {
