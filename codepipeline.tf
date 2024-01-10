@@ -77,7 +77,7 @@ resource "aws_codepipeline" "orjujeng_codepipeline_poc" {
       version          = "1"
       output_artifacts = ["source_output"]
       configuration = {
-        S3Bucket = aws_s3_bucket.artifacts_file.bucket
+        S3Bucket    = aws_s3_bucket.artifacts_file.bucket
         S3ObjectKey = "source_input/placeholder.zip"
       }
     }
@@ -87,11 +87,11 @@ resource "aws_codepipeline" "orjujeng_codepipeline_poc" {
     name = "Approval-Needed"
 
     action {
-      name             = "ManualApproval"
-      category         = "Approval"
-      owner            = "AWS"
-      provider         = "Manual"
-      version          = "1"
+      name     = "ManualApproval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
       configuration = {
         "CustomData" : "Below Action Will Use Codebuild"
       }
@@ -127,8 +127,8 @@ resource "aws_codepipeline" "orjujeng_codepipeline_poc" {
       version         = "1"
 
       configuration = {
-       ApplicationName = aws_codedeploy_app.orjujeng_codedeploy_poc_app.name
-       DeploymentGroupName = aws_codedeploy_deployment_group.orjujeng_codedeploy_poc_group.deployment_group_name
+        ApplicationName     = aws_codedeploy_app.orjujeng_codedeploy_poc_app.name
+        DeploymentGroupName = aws_codedeploy_deployment_group.orjujeng_codedeploy_poc_group.deployment_group_name
       }
     }
   }

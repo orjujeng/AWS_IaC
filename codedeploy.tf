@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
 #codedeploy app
 resource "aws_codedeploy_app" "orjujeng_codedeploy_poc_app" {
   compute_platform = "Server"
-  name = "orjujeng_codedeploy_poc_app"
+  name             = "orjujeng_codedeploy_poc_app"
 }
 
 #codedeploy group 
@@ -41,7 +41,13 @@ resource "aws_codedeploy_deployment_group" "orjujeng_codedeploy_poc_group" {
       value = "orjujeng-iac-test-ec2"
     }
   }
-
+  load_balancer_info {
+    target_group_info {
+      name = aws_lb_target_group.orjujeng_target_group.name
+    }
+  }
+  deployment_config_name      = "CodeDeployDefault.AllAtOnce"
+  autoscaling_groups          = [aws_autoscaling_group.orjujeng_autoscaling.id]
   outdated_instances_strategy = "UPDATE"
 
 }
