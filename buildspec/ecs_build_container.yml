@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/orjujeng
+  build:
+    commands:
+      - docker build -t orjujeng_ecr_pubilc_repo .
+      - docker tag orjujeng_ecr_pubilc_repo:latest public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
+      - aws ecr batch-delete-image --repository-name orjujeng_ecr_pubilc_repo --images-ids imageTag=latest || 1 
+      - docker push public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
+  post_build:
+    commands:
+
+artifacts:
+  files:
+      - appspec.yml
+cache:
+  paths:
+    - root/.m2/**/*

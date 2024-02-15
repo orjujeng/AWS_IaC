@@ -1,0 +1,16 @@
+[
+    {
+      "name": "th-manager-api",
+      "image": "public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo",
+      "cpu": 256,
+      "memory": 256,
+      "essential": true,
+      "portMappings": [
+        {
+            "containerPort": 8080,
+            "hostPort": 0,
+            "protocol": "tcp"
+        }
+    ]
+    }
+]

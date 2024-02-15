@@ -129,19 +129,11 @@ resource "aws_security_group" "orjujeng_ec2_sg" {
   }
 
   ingress {
-    description = "http to EC2"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "tomcat to EC2"
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description     = "alllow lb to ec2"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.orjujeng_lb_sg.id]
   }
 
   ingress {

@@ -22,6 +22,11 @@ resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
   role       = aws_iam_role.orjuneng_codedeploy_role.name
 }
 
+resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+  role       = aws_iam_role.orjuneng_codedeploy_role.name
+}
+
 #codedeploy app
 resource "aws_codedeploy_app" "orjujeng_codedeploy_poc_app" {
   compute_platform = "Server"
@@ -57,3 +62,51 @@ resource "aws_codedeploy_deployment_group" "orjujeng_codedeploy_poc_group" {
 #sudo yum install ruby -y && sudo cd /home/ec2-user && sudo wget https://aws-codedeploy-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/latest/install&&sudo chmod +x ./install&&sudo ./install auto
 
 
+# resource "aws_codedeploy_deployment_group" "orjujeng_codedeploy_ecs_group" {
+#   app_name              = aws_codedeploy_app.orjujeng_codedeploy_ecs_app.name
+#   deployment_group_name = "orjujeng_codedeploy_ecs_app"
+#   service_role_arn      = aws_iam_role.orjuneng_codedeploy_role.arn
+
+
+
+#   blue_green_deployment_config {
+
+#     deployment_ready_option {
+#       action_on_timeout = "CONTINUE_DEPLOYMENT"
+#     }
+
+#     terminate_blue_instances_on_deployment_success {
+#       action                           = "TERMINATE"
+#       termination_wait_time_in_minutes = 5
+#     }
+
+#   }
+
+#   ecs_service {
+#     cluster_name = aws_ecs_cluster.orjujeng_ecs_cluster.name
+#     service_name = aws_ecs_service.orjujeng_service.name
+#   }
+#   deployment_style {
+#     deployment_option = "WITH_TRAFFIC_CONTROL"
+#     deployment_type   = "BLUE_GREEN"
+#   }
+#   load_balancer_info {
+#     target_group_pair_info {
+#       prod_traffic_route {
+#         listener_arns = [aws_alb_listener.orjujeng_alb_default_listener_https.arn]
+#       }
+#       target_group {
+#         name = aws_alb_target_group.orjujeng_service_target_group.name
+#       }
+#     }
+#   }
+
+#   deployment_config_name = "CodeDeployDefault.AllAtOnce"
+
+# }
+
+#codedeploy app
+resource "aws_codedeploy_app" "orjujeng_codedeploy_ecs_app" {
+  compute_platform = "ECS"
+  name             = "orjujeng_codedeploy_ecs_app"
+}

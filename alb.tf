@@ -1,15 +1,3 @@
-# target group 
-resource "aws_lb_target_group" "orjujeng_target_group" {
-  name        = "orjujeng-target-group"
-  port        = 8080
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.orjujeng_vpc.id
-  target_type = "instance"
-  tags = {
-    Name = "orjujeng_target_group"
-  }
-}
-
 #lb
 resource "aws_alb" "orjujeng_lb" {
   name               = "orjujeng-lb"
@@ -21,7 +9,20 @@ resource "aws_alb" "orjujeng_lb" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "orjujeng_lb"
+    Name = "orjujeng_alb"
+  }
+}
+
+#####for ec2 only 
+# target group 
+resource "aws_lb_target_group" "orjujeng_target_group" {
+  name        = "orjujeng-target-group"
+  port        = 8080
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.orjujeng_vpc.id
+  target_type = "instance"
+  tags = {
+    Name = "orjujeng_target_group"
   }
 }
 
@@ -37,25 +38,29 @@ resource "aws_alb" "orjujeng_lb" {
 #   }
 # }
 
+
+
+#####for ecs only 
 ## Default HTTPS listener that blocks all traffic without valid custom origin header
-resource "aws_alb_listener" "orjujeng_alb_default_listener_https" {
+resource "aws_alb_listener" "orjujeng_alb_ecs_listener" {
   load_balancer_arn = aws_alb.orjujeng_lb.arn
   port              = "80"
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.orjujeng_service_target_group.arn
+    target_group_arn = aws_lb_target_group.orjujeng_service_target_group.arn
   }
 }
 
 ## Target Group for our service
-resource "aws_alb_target_group" "orjujeng_service_target_group" {
+resource "aws_lb_target_group" "orjujeng_service_target_group" {
   name                 = "orjujeng-service-target-group"
   port                 = "80"
   protocol             = "HTTP"
   vpc_id               = aws_vpc.orjujeng_vpc.id
   deregistration_delay = 120
+  # need setting when use th api
   # health_check {
   #   healthy_threshold   = "2"
   #   unhealthy_threshold = "2"
@@ -68,5 +73,3 @@ resource "aws_alb_target_group" "orjujeng_service_target_group" {
   # }
   depends_on = [aws_alb.orjujeng_lb]
 }
-
-

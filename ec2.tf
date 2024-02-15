@@ -4,7 +4,7 @@ data "aws_ami" "latest-amazon-linux-image" {
   owners      = ["amazon"]
   filter {
     name   = "name"
-    values = ["amzn2-ami-ecs-hvm-*-x86_64-ebs"]
+    values = ["amzn-ami-*-ecs-optimized"]
   }
   filter {
     name   = "virtualization-type"

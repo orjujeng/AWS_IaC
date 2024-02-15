@@ -1,0 +1,36 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Login ECR
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/orjujeng
+      - echo ${REPO_HTTPS}
+      - git clone -b ${BRANCH} ${REPO_HTTPS} repo
+      - cd repo
+  build:
+    commands:
+      - echo start package of java code
+      - mvn clean package -q -Dskiptests=true
+      - echo build docker image
+      - docker build -t orjujeng_ecr_pubilc_repo .
+      - docker tag orjujeng_ecr_pubilc_repo:latest public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
+      
+  post_build:
+    commands:
+      - echo start push docker image to ECR
+      - docker push public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
+      - printf '[{"name":"th-manager-api","imageUri":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest"}]' > imagedefinitions.json
+      - cp imagedefinitions.json ../
+      # - cp -r target ../
+      # - cp appspec.yml ../
+      # - cp build_expose.sh ../
+artifacts:
+  files:
+    imagedefinitions.json
+    #- Dockerfile
+    #- target/*.jar
+    #- appspec.yml
+    # - build_expose.sh
+# cache:
+#   paths:
+#     - root/.m2/**/*
