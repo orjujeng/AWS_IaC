@@ -106,9 +106,9 @@ resource "aws_ecs_service" "orjujeng_service" {
   cluster         = aws_ecs_cluster.orjujeng_ecs_cluster.id
   task_definition = aws_ecs_task_definition.orjujeng_ecs_task_definition.arn
   #need close
-  desired_count   = 1
-  deployment_minimum_healthy_percent = 0
-  deployment_maximum_percent         = 100
+  desired_count                      = 1
+  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent         = 150
 
   ordered_placement_strategy {
     type  = "binpack"
@@ -120,20 +120,17 @@ resource "aws_ecs_service" "orjujeng_service" {
     container_name   = "th-manager-api"
     container_port   = "8080"
   }
-
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
   # ## Spread tasks evenly accross all Availability Zones for High Availability
   # ordered_placement_strategy {
   #   type  = "spread"
   #   field = "attribute:ecs.availability-zone"
   # }
-  # ## Make use of all available space on the Container Instances
-  # ordered_placement_strategy {
-  #   type  = "binpack"
-  #   field = "memory"
-  # } 
   ## Do not update desired count again to avoid a reset to this number on every deployment
   lifecycle {
-    ignore_changes = [desired_count]
+    ignore_changes = [desired_count,task_definition,load_balancer]
   }
 }
 #https://nexgeneerz.io/aws-computing-with-ecs-ec2-terraform/#Autoscaling_on_ECS

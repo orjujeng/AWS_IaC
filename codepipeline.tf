@@ -53,21 +53,21 @@ data "aws_iam_policy_document" "orjujeng_codepipeline_policy" {
     effect = "Allow"
 
     actions = [
-      "codedeploy:*"
-    ]
-
-    resources = ["*"]
-  }
-  statement {
-    effect = "Allow"
-
-    actions = [
       "iam:PassRole"
     ]
 
     resources = ["*"]
   }
-  
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ecs:*"
+    ]
+    resources = ["*"]
+  }
+
 }
 
 resource "aws_iam_role_policy" "orjujeng_codepipeline_policy" {
@@ -160,7 +160,7 @@ resource "aws_iam_role_policy" "orjujeng_codepipeline_policy" {
 
 #ecs codepipeline
 resource "aws_codepipeline" "orjujeng_ecs_codepipeline" {
-  name     = "orjujeng-esc-codepipeline"
+  name     = "orjujeng-ecs-codepipeline"
   role_arn = aws_iam_role.orjujeng_codepipeline_role.arn
 
   artifact_store {
@@ -224,14 +224,17 @@ resource "aws_codepipeline" "orjujeng_ecs_codepipeline" {
       name            = "Deploy"
       category        = "Deploy"
       owner           = "AWS"
-      provider        = "ECS"
+      provider        = "CodeDeployToECS"
       input_artifacts = ["ecs_images_build_output"]
       version         = "1"
 
       configuration = {
-        ClusterName = aws_ecs_cluster.orjujeng_ecs_cluster.name
-        ServiceName = aws_ecs_service.orjujeng_service.name
-        FileName = "imagedefinitions.json"
+        ApplicationName                = aws_codedeploy_app.orjujeng_codedeploy_ecs_app.name
+        DeploymentGroupName            = aws_codedeploy_deployment_group.orjujeng_codedeploy_ecs_group.deployment_group_name
+        TaskDefinitionTemplateArtifact = "ecs_images_build_output"
+        AppSpecTemplateArtifact        = "ecs_images_build_output"
+        Image1ArtifactName             = "ImageArtifact"
+        Image1ContainerName            = "IMAGE1_NAME"
       }
     }
   }

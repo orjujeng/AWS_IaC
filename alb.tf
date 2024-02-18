@@ -73,3 +73,23 @@ resource "aws_lb_target_group" "orjujeng_service_target_group" {
   # }
   depends_on = [aws_alb.orjujeng_lb]
 }
+
+resource "aws_lb_target_group" "orjujeng_service_target_group_b" {
+  name                 = "orjujeng-service-target-group-b"
+  port                 = "80"
+  protocol             = "HTTP"
+  vpc_id               = aws_vpc.orjujeng_vpc.id
+  deregistration_delay = 120
+  # need setting when use th api
+  # health_check {
+  #   healthy_threshold   = "2"
+  #   unhealthy_threshold = "2"
+  #   interval            = "60"
+  #   matcher             = var.healthcheck_matcher
+  #   path                = var.healthcheck_endpoint
+  #   port                = "traffic-port"
+  #   protocol            = "HTTP"
+  #   timeout             = "30"
+  # }
+  depends_on = [aws_alb.orjujeng_lb]
+}

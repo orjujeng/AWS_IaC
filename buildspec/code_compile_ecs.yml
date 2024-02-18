@@ -21,12 +21,25 @@ phases:
       - docker push public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
       - printf '[{"name":"th-manager-api","imageUri":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest"}]' > imagedefinitions.json
       - cp imagedefinitions.json ../
+      - printf '[{"ImageURI":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest"}]' > imageDetail.json
+      - cp imageDetail.json ../
       # - cp -r target ../
-      # - cp appspec.yml ../
+      - cp appspec.yaml ../
+      - cp taskdef.json ../
       # - cp build_expose.sh ../
 artifacts:
-  files:
-    imagedefinitions.json
+  files: 
+    - 'image*.json'
+    - 'appspec.yaml'
+    - 'taskdef.json'
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
     #- Dockerfile
     #- target/*.jar
     #- appspec.yml

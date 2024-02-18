@@ -205,8 +205,8 @@ data "aws_iam_policy_document" "orjujeng_ecs_codebuild_policy" {
 
     actions = [
       "logs:CreateLogGroup",
-			"logs:CreateLogStream",
-			"logs:PutLogEvents"
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
     ]
 
     resources = ["*"]
@@ -217,9 +217,9 @@ data "aws_iam_policy_document" "orjujeng_ecs_codebuild_policy" {
 
     actions = [
       "ecr:BatchCheckLayerAvailability",
-			"ecr:GetDownloadUrlForLayer",
-			"ecr:BatchGetImage",
-			"ecr:GetAuthorizationToken"
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:GetAuthorizationToken"
     ]
 
     resources = ["*"]
