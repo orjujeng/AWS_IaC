@@ -101,9 +101,9 @@ resource "aws_iam_role_policy_attachment" "attach_AmazonEC2ContainerServiceRole"
 
 # Creates ECS Service
 resource "aws_ecs_service" "orjujeng_service" {
-  name            = "orjujeng_service"
-  iam_role        = aws_iam_role.orjujeng_ecs_service_role.arn
-  cluster         = aws_ecs_cluster.orjujeng_ecs_cluster.id
+  name     = "orjujeng_service"
+  iam_role = aws_iam_role.orjujeng_ecs_service_role.arn
+  cluster  = aws_ecs_cluster.orjujeng_ecs_cluster.id
   # task_definition = aws_ecs_task_definition.orjujeng_ecs_task_definition.arn
   #need close
   desired_count                      = 1
