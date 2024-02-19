@@ -104,7 +104,7 @@ resource "aws_ecs_service" "orjujeng_service" {
   name            = "orjujeng_service"
   iam_role        = aws_iam_role.orjujeng_ecs_service_role.arn
   cluster         = aws_ecs_cluster.orjujeng_ecs_cluster.id
-  task_definition = aws_ecs_task_definition.orjujeng_ecs_task_definition.arn
+  # task_definition = aws_ecs_task_definition.orjujeng_ecs_task_definition.arn
   #need close
   desired_count                      = 1
   deployment_minimum_healthy_percent = 50
@@ -130,7 +130,7 @@ resource "aws_ecs_service" "orjujeng_service" {
   # }
   ## Do not update desired count again to avoid a reset to this number on every deployment
   lifecycle {
-    ignore_changes = [desired_count,task_definition,load_balancer]
+    ignore_changes = [desired_count, task_definition, load_balancer]
   }
 }
 #https://nexgeneerz.io/aws-computing-with-ecs-ec2-terraform/#Autoscaling_on_ECS
