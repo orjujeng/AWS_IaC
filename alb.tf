@@ -1,7 +1,7 @@
 #lb
 resource "aws_alb" "orjujeng_lb" {
   name               = "orjujeng-lb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.orjujeng_lb_sg.id]
   subnets            = [aws_subnet.orjujeng_inside_net_1a.id, aws_subnet.orjujeng_inside_net_1c.id]

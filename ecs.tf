@@ -160,8 +160,8 @@ resource "aws_ecs_service" "orjujeng_manager_api_service" {
   task_definition = aws_ecs_task_definition.orjujeng_manager_api_ecs_task_definition.arn
   #need close
   desired_count                      = 1
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent         = 150
+  deployment_minimum_healthy_percent = 0
+  deployment_maximum_percent         = 200
 
   ordered_placement_strategy {
     type  = "binpack"
@@ -194,7 +194,7 @@ resource "aws_ecs_service" "orjujeng_manager_api_service" {
 #ecs autoscaling 
 resource "aws_appautoscaling_target" "orjujeng_ecs_target" {
   max_capacity       = 2
-  min_capacity       = 1
+  min_capacity       = 0
   resource_id        = "service/${aws_ecs_cluster.orjujeng_ecs_cluster.name}/${aws_ecs_service.orjujeng_manager_api_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
