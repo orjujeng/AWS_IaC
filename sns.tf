@@ -8,8 +8,8 @@ resource "aws_sns_topic_subscription" "orjujeng_sns_topic_subscription" {
   endpoint  = "orjujeng@hotmail.com"
 }
 
-resource "aws_sns_topic_subscription" "orjujeng_sns_topic_subscription" {
-  topic_arn = aws_sns_topic.orjujeng_sns_topic.arn
-  protocol  = "email"
-  endpoint  = "orjujeng@gmail.com"
-}
+# resource "aws_sns_topic_subscription" "orjujeng_sns_topic_subscription" {
+#   topic_arn = aws_sns_topic.orjujeng_sns_topic.arn
+#   protocol  = "email"
+#   endpoint  = "orjujeng@gmail.com"
+# }

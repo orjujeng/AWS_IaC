@@ -13,15 +13,15 @@ phases:
       - mvn clean package -q -Dskiptests=true
       - echo build docker image
       - docker build -t orjujeng_ecr_pubilc_repo .
-      - docker tag orjujeng_ecr_pubilc_repo:latest public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
+      - docker tag orjujeng_ecr_pubilc_repo:latest public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api
       
   post_build:
     commands:
       - echo start push docker image to ECR
-      - docker push public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest
-      - printf '[{"name":"th-manager-api","imageUri":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest"}]' > imagedefinitions.json
+      - docker push public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api
+      - printf '[{"name":"th-manager-api","imageUri":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api"}]' > imagedefinitions.json
       - cp imagedefinitions.json ../
-      - printf '[{"ImageURI":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:latest"}]' > imageDetail.json
+      - printf '[{"ImageURI":"public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api"}]' > imageDetail.json
       - cp imageDetail.json ../
       # - cp -r target ../
       - cp appspec.yaml ../

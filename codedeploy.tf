@@ -82,7 +82,7 @@ resource "aws_codedeploy_deployment_group" "orjujeng_codedeploy_ecs_group" {
 
   ecs_service {
     cluster_name = aws_ecs_cluster.orjujeng_ecs_cluster.name
-    service_name = aws_ecs_service.orjujeng_service.name
+    service_name = aws_ecs_service.orjujeng_manager_api_service.name
   }
   deployment_style {
     deployment_option = "WITH_TRAFFIC_CONTROL"
@@ -94,11 +94,11 @@ resource "aws_codedeploy_deployment_group" "orjujeng_codedeploy_ecs_group" {
         listener_arns = [aws_alb_listener.orjujeng_alb_ecs_listener.arn]
       }
       target_group {
-        name = aws_lb_target_group.orjujeng_service_target_group.name
+        name = aws_lb_target_group.orjujeng_manager_api_target_group.name
       }
 
       target_group {
-        name = aws_lb_target_group.orjujeng_service_target_group_b.name
+        name = aws_lb_target_group.orjujeng_manager_api_target_group_b.name
       }
     }
   }

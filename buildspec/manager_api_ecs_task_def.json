@@ -1,7 +1,7 @@
 [
     {
       "name": "th-manager-api",
-      "image": "public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo",
+      "image": "public.ecr.aws/orjujeng/orjujeng_ecr_pubilc_repo:th-manager-api",
       "cpu": 256,
       "memory": 256,
       "essential": true,
@@ -10,6 +10,12 @@
             "containerPort": 8080,
             "hostPort": 0,
             "protocol": "tcp"
+        }
+    ],
+    "secrets": [
+        {
+            "name": "lb_url",
+            "valuefrom": "arn:aws:ssm:ap-northeast-1:877401119357:parameter/orjujeng_ssm_lb_dns"
         }
     ]
     }

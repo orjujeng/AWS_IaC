@@ -7,23 +7,24 @@ resource "aws_db_subnet_group" "orjujeng_rds_subnet_group" {
     Name = "orjujeng_rds_subnet_group"
   }
 }
-# resource "aws_db_instance" "orjujeng_mysql_rds" {
-#   allocated_storage       = 10
-#   availability_zone       = var.availability_zone_1a
-#   backup_retention_period = 7
-#   db_subnet_group_name    = aws_db_subnet_group.orjujeng_rds_subnet_group.name
-#   engine                  = "mysql"
-#   engine_version          = "5.7"
-#   instance_class          = "db.t3.micro"
-#   username                = "root"
-#   password                = "root12345678"
-#   port                    = 3306
-#   vpc_security_group_ids  = [aws_security_group.orjujeng_rds_sg.id]
-#   multi_az                = false
-#   skip_final_snapshot     = true
-#   tags = {
-#     name : "orjujeng_mysql_rds"
-#   }
-# }
+resource "aws_db_instance" "orjujeng_mysql_rds" {
+  allocated_storage       = 10
+  availability_zone       = var.availability_zone_1a
+  backup_retention_period = 7
+  db_subnet_group_name    = aws_db_subnet_group.orjujeng_rds_subnet_group.name
+  engine                  = "mysql"
+  engine_version          = "5.7"
+  instance_class          = "db.t3.micro"
+  username                = "root"
+  password                = "root12345678"
+  port                    = 3306
+  vpc_security_group_ids  = [aws_security_group.orjujeng_rds_sg.id]
+  multi_az                = false
+  skip_final_snapshot     = true
+  tags = {
+    name : "orjujeng_mysql_rds"
+  }
+}
 
 #if you wanna contect the rds via ec2 please reference https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.MySQL.html#CHAP_GettingStarted.Connecting.MySQL
+#mysql -h terraform-20240223134441912900000001.c3m6wy02227a.ap-northeast-1.rds.amazonaws.com -P 3306 -u root -p

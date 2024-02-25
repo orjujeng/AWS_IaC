@@ -54,7 +54,7 @@ resource "aws_launch_template" "orjujeng_ecs_template" {
     Name = "orjujeng-ecs-template"
   }
 
-  //must chage this shell file when ecs cluster change 
+  //must change this shell file when ecs cluster change 
   user_data = filebase64("./buildspec/ecs_init.sh")
 }
 
@@ -64,10 +64,10 @@ resource "aws_launch_template" "orjujeng_ecs_template" {
 #acto_scaling for ecs ->> ec2 this autoscaling setting only relate with the ecs ec2 
 resource "aws_autoscaling_group" "orjujeng_autoscaling_ecs" {
   name     = "orjujeng-autoscaling-ecs"
-  max_size = 1
+  max_size = 2
   min_size = 0
   # need close for saving unit
-  desired_capacity          = 1
+  desired_capacity          = 2
   health_check_grace_period = 300
   health_check_type         = "EC2"
   force_delete              = true

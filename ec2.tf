@@ -24,7 +24,7 @@ resource "aws_key_pair" "orjujeng_macmini_ec2_key_pair" {
 #ec2 
 #please keep it destory after daily work for saving cost.
 # resource "aws_instance" "orjujeng-iac-test-ec2-1a" {
-#   ami                         = data.aws_ami.latest-amazon-linux-image.id
+#   ami                         = "ami-020283e959651b381"
 #   instance_type               = "t2.micro"
 #   subnet_id                   = aws_subnet.orjujeng_inside_net_1a.id
 #   vpc_security_group_ids      = [aws_security_group.orjujeng_ec2_sg.id]
